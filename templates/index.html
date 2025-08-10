@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>物流单号查询系统</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">物流查询</a>
+    <div class="d-flex">
+      <span class="navbar-text me-3">诊所：{{ clinic }}</span>
+      <span class="navbar-text me-3">用户：{{ user }}</span>
+      <a class="btn btn-outline-secondary" href="{{ url_for('logout') }}">退出</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <h3 class="mb-3">按单号/姓名查询（仅显示本诊所数据）</h3>
+  <form method="get" class="mb-3">
+    <input type="text" name="q" class="form-control" placeholder="输入物流单号或客户名字进行查询" value="{{ keyword or '' }}">
+    <button type="submit" class="btn btn-primary mt-2">查询</button>
+  </form>
+
+  <div class="table-responsive">
+    {{ table|safe }}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
